@@ -1,1 +1,2 @@
-#!/bin/bash\ncp -un *.html ../
+#!/bin/bash
+cp -un *.html ../
