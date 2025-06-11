@@ -1,15 +1,2 @@
 #!/usr/bin/env bash
-
-# This script reads a TSV log file from standard input
-# and prints the top 11 most active hosts (by number of requests).
-
-# Skip the header line, extract the first column (host), sort it,
-# count occurrences, sort by frequency (descending), and get top 11.
-
-awk 'NR > 1 { print $1 }' \
-| sort \
-| uniq -c \
-| sort -nr \
-| head -n 11 \
-| awk '{ print $2 }'
-
+awk 'NR > 1 { print $1 }' | sort | uniq -c | sort -nr | head -n11 | awk '{ print $2 }'
