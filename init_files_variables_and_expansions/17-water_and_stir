@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# File: init_files_variables_and_expansions/17-water_and_stir
+
+# Define the alphabets (digits) used in each base
+base_water="water"
+base_stir="stir."
+base_bestchol="bestchol"
+
+# Function to convert from custom base to decimal
+base_to_dec() {
+  local input="$1"
+  local base_chars="$2"
+  local base_len=${#base_chars}
+  local result=0
+  local digit
+
+  for (( i=0; i<${#input}; i++ )); do
+    digit="${input:$i:1}"
+    pos=$(expr index "$base_chars" "$digit")
+    pos=$((pos - 1))  # expr index is 1-based
+    result=$((result * base_len + pos))
+  done
+
+  echo "$result"
+}
+
+# Function to convert from decimal to custom base
+dec_to_base() {
+  local number=$1
+  local base_chars="$2"
+  local base_len=${#base_chars}
+  local result=""
+
+  while (( number > 0 )); do
+    digit=$((number % base_len))
+    result="${base_chars:$digit:1}$result"
+    number=$((number / base_len))
+  done
+
+  echo "$result"
+}
+
+# Convert input env variables
+num1=$(base_to_dec "$WATER" "$base_water")
+num2=$(base_to_dec "$STIR" "$base_stir")
+
+# Add the two decimal numbers
+sum=$((num1 + num2))
+
+# Convert sum to base-bestchol and print
+dec_to_base "$sum" "$base_bestchol"
+
